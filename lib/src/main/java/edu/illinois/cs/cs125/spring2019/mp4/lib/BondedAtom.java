@@ -200,10 +200,10 @@ public final class BondedAtom implements Iterable<BondedAtom> {
     }
 
     /**
-     * Return the count of high-priority substituents attached to this atom.
+     * Return the count of low-priority substituents attached to this atom.
      *
      * @param backbone the backbone of this molecule to use to identify off-backbone carbons
-     * @return the count of high-priority substituents attached to this atom
+     * @return the count of low-priority substituents attached to this atom
      */
     public int lowPrioritySubstituentCount(final List<BondedAtom> backbone) {
         loadConnectedAtoms();
