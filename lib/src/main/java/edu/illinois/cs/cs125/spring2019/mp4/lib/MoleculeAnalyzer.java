@@ -36,6 +36,8 @@ public class MoleculeAnalyzer {
      * @param molecule an atom belonging to the molecule that will be analyzed.
      */
     public MoleculeAnalyzer(final BondedAtom molecule) {
+        ArrayList<BondedAtom> atomList = new ArrayList<BondedAtom>();
+        allAtoms = findAllAtoms(molecule, atomList);
     }
 
     /**
@@ -49,7 +51,15 @@ public class MoleculeAnalyzer {
      * @see <a href="https://en.wikipedia.org/wiki/Graph_traversal">Graph Traversal</a>
      */
     public ArrayList<BondedAtom> findAllAtoms(final BondedAtom current, final ArrayList<BondedAtom> atoms) {
-        return null;
+
+        if (atoms.contains(current)) {
+            return atoms;
+        }
+        atoms.add(current);
+        for (BondedAtom neighbor : current) {
+            findAllAtoms(neighbor, atoms);
+        }
+        return atoms;
     }
 
     /**
@@ -60,7 +70,14 @@ public class MoleculeAnalyzer {
      * @return the molecular weight of the molecule in grams per mole
      */
     public double getMolecularWeight() {
-        return 0.0;
+
+        double molecularWeight = 0;
+
+        for (BondedAtom atom : allAtoms) {
+            molecularWeight += atom.getElement().getWeight();
+        }
+
+        return molecularWeight;
     }
 
     /**
