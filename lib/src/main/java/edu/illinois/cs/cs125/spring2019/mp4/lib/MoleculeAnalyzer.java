@@ -1,5 +1,6 @@
 package edu.illinois.cs.cs125.spring2019.mp4.lib;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -156,9 +157,7 @@ public class MoleculeAnalyzer {
      * @see <a href="https://en.wikipedia.org/wiki/Vertex_(graph_theory)">Leaf Vertex</a>
      */
     public List<BondedAtom> getTips() {
-
-        ArrayList<BondedAtom> listTips = new ArrayList<BondedAtom>();
-
+        ArrayList<BondedAtom> listTips = new ArrayList<>();
         for (BondedAtom atom : allAtoms) {
             if (atom.isCarbon()) {
                 int counter = 0;
@@ -172,7 +171,6 @@ public class MoleculeAnalyzer {
                 }
             }
         }
-
         return listTips;
     }
 
@@ -185,6 +183,14 @@ public class MoleculeAnalyzer {
      * @return a list of all possible backbones, each itself a list of atoms
      */
     public List<List<BondedAtom>> getBackbones() {
+        List<BondedAtom> listTips = getTips();
+
+        for (BondedAtom tip : listTips) {
+
+        }
+
+
+
 
         return null;
     }
@@ -221,6 +227,22 @@ public class MoleculeAnalyzer {
      * @see <a href="https://en.wikipedia.org/wiki/Pathfinding">Graph Pathfinding</a>
      */
     public List<BondedAtom> findPath(final BondedAtom current, final BondedAtom end, final List<BondedAtom> path) {
+        //Increment the loop
+        path.add(current);
+        //Base Case
+        if (current.equals(end)) {
+            return path;
+        }
+        for (BondedAtom atom : current) {
+            if (path.contains(atom)) {
+                continue;
+            }
+            List<BondedAtom> y = new ArrayList<>(path);
+            y = findPath(atom, end, y);
+            if (y != null)  {
+                return y;
+            }
+        }
         return null;
     }
 
