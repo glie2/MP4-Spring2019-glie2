@@ -70,13 +70,10 @@ public class MoleculeAnalyzer {
      * @return the molecular weight of the molecule in grams per mole
      */
     public double getMolecularWeight() {
-
         double molecularWeight = 0;
-
         for (BondedAtom atom : allAtoms) {
             molecularWeight += atom.getElement().getWeight();
         }
-
         return molecularWeight;
     }
 
@@ -92,6 +89,15 @@ public class MoleculeAnalyzer {
      * @return true if there is at least one charged atom in the molecule, false otherwise
      */
     public boolean hasChargedAtoms() {
+        for (BondedAtom atom : allAtoms) {
+            int sumBonds = 0;
+            for (BondedAtom.BondInfo bond : atom.getBondInfo()) {
+                sumBonds += bond.getCount();
+            }
+            if (atom.getElement().getValence() != sumBonds) {
+                return true;
+            }
+        }
         return false;
     }
 
