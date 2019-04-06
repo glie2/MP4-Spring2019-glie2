@@ -156,7 +156,24 @@ public class MoleculeAnalyzer {
      * @see <a href="https://en.wikipedia.org/wiki/Vertex_(graph_theory)">Leaf Vertex</a>
      */
     public List<BondedAtom> getTips() {
-        return null;
+
+        ArrayList<BondedAtom> listTips = new ArrayList<BondedAtom>();
+
+        for (BondedAtom atom : allAtoms) {
+            if (atom.isCarbon()) {
+                int counter = 0;
+                for (BondedAtom bondatom : atom) {
+                    if (bondatom.isCarbon()) {
+                        counter++;
+                    }
+                }
+                if (counter <= 1) {
+                    listTips.add(atom);
+                }
+            }
+        }
+
+        return listTips;
     }
 
     /**
@@ -168,6 +185,7 @@ public class MoleculeAnalyzer {
      * @return a list of all possible backbones, each itself a list of atoms
      */
     public List<List<BondedAtom>> getBackbones() {
+
         return null;
     }
 
