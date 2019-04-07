@@ -1,6 +1,6 @@
 package edu.illinois.cs.cs125.spring2019.mp4.lib;
 
-import java.lang.reflect.Array;
+//import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -116,7 +116,7 @@ public class MoleculeAnalyzer {
      * @see <a href="https://en.wikipedia.org/wiki/Cycle_(graph_theory)">Cycle Detection</a>
      */
     public List<BondedAtom> getRing() {
-        return null;
+        return getRing(allAtoms.get(0), new ArrayList<BondedAtom>());
     }
 
     /**
@@ -130,7 +130,39 @@ public class MoleculeAnalyzer {
      * @see <a href="https://en.wikipedia.org/wiki/Cycle_(graph_theory)">Cycle Detection</a>
      */
     public List<BondedAtom> getRing(final BondedAtom current, final List<BondedAtom> visited) {
+
+        for (BondedAtom neighbor : current) {
+
+            List<BondedAtom> copy = new ArrayList<>(visited);
+            if (copy.contains(neighbor)) {
+
+                List<BondedAtom> ring = new ArrayList<>();
+
+                for (BondedAtom atom : copy) {
+
+                    if (atom.equals(neighbor) || ring.size() > 0) {
+                        ring.add(atom);
+                    }
+                }
+
+                if (ring.size() >= 3) {
+                    return ring;
+                } else {
+                    continue;
+                }
+            }
+            copy.add(neighbor);
+            List<BondedAtom> poop = (getRing(neighbor, copy));
+            if (poop != null) {
+                return poop;
+            }
+        }
         return null;
+        /**
+        //Base Case
+        if (current.equals(visited.get(0)) && visited.size() >= 3) {
+            return visited;
+        }*/
     }
 
     /**
@@ -199,7 +231,7 @@ public class MoleculeAnalyzer {
         List<List<BondedAtom>> backbone = new ArrayList<>(0);
         List<BondedAtom> listTips = getTips();
         if (getTips().size() == 1) {
-            backbone.add(findPath(listTips.get(0), listTips.get(0)));
+            backbone.add(listTips); //findPath(listTips.get(0), listTips.get(0)))
             return backbone;
         }
         for (int i = 0; i < listTips.size(); i++) {
@@ -277,7 +309,19 @@ public class MoleculeAnalyzer {
      * @return the backbone ring rotated into the correct position, never null
      */
     public List<BondedAtom> rotateRing(final List<BondedAtom> ring) {
-        return null;
+        if (ring == null) {
+            return null;
+        }
+        for (int i = 0; i < ring.size(); i++) {
+
+            if (ring.get(i).hasSubstituent(ring) && i != 0) {
+                int rotateAmount = ring.size() - i;
+
+                Collections.rotate(ring, rotateAmount);
+
+            }
+        }
+        return ring;
     }
 
     /**
