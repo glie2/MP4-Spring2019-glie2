@@ -3,6 +3,7 @@ package edu.illinois.cs.cs125.spring2019.mp4.lib;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,7 +141,19 @@ public class MoleculeAnalyzer {
      * @return the list of atoms constituting the linear backbone of this atom
      */
     public List<BondedAtom> getLinearBackbone() {
-        return null;
+        List<List<BondedAtom>> backbone = getBackbones();
+        if (backbone == null || backbone.size() == 0) {
+            return new ArrayList<BondedAtom>(0);
+        }
+        int maxSize = 0;
+        int maxIndex = 0;
+        for (int i = 0; i < backbone.size(); i++) {
+            if (backbone.get(i).size() > maxSize) {
+                maxIndex = i;
+                maxSize = backbone.get(i).size();
+            }
+        }
+        return backbone.get(maxIndex);
     }
 
     /**
@@ -183,16 +196,21 @@ public class MoleculeAnalyzer {
      * @return a list of all possible backbones, each itself a list of atoms
      */
     public List<List<BondedAtom>> getBackbones() {
+        List<List<BondedAtom>> backbone = new ArrayList<>(0);
         List<BondedAtom> listTips = getTips();
-
-        for (BondedAtom tip : listTips) {
-
+        if (getTips().size() == 1) {
+            backbone.add(findPath(listTips.get(0), listTips.get(0)));
+            return backbone;
         }
+        for (int i = 0; i < listTips.size(); i++) {
+            for (int j = 0; j < listTips.size(); j++) {
 
-
-
-
-        return null;
+                if (i != j) {
+                    backbone.add(findPath(listTips.get(i), listTips.get(j)));
+                }
+            }
+        }
+        return backbone;
     }
 
     /**
