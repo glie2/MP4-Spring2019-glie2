@@ -22,6 +22,9 @@ import edu.illinois.cs.cs125.spring2019.mp4.lib.CyclicOrganicMoleculeBuilder;
 import edu.illinois.cs.cs125.spring2019.mp4.lib.LinearOrganicMoleculeBuilder;
 import edu.illinois.cs.cs125.spring2019.mp4.lib.OrganicMoleculeBuilder;
 
+/**
+ * random javadoc comment.
+ */
 public class MoleculeActivity extends Activity {
 
     /**
