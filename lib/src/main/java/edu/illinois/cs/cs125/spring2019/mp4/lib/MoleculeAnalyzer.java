@@ -185,6 +185,22 @@ public class MoleculeAnalyzer {
                 maxSize = backbone.get(i).size();
             }
         }
+
+        //Find backbone w/ substituent earliest in the list
+        int counter = 0;
+        for (BondedAtom atom : backbone.get(maxIndex)) {
+
+            if (atom.hasSubstituent(backbone.get(maxIndex))) {
+                break;
+            }
+            counter++;
+
+        }
+        if (counter >= backbone.get(maxIndex).size() * 0.5) {
+            Collections.reverse(backbone.get(maxIndex));
+            return backbone.get(maxIndex);
+        }
+
         return backbone.get(maxIndex);
     }
 
