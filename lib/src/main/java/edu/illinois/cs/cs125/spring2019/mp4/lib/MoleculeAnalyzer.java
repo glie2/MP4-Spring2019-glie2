@@ -209,7 +209,7 @@ public class MoleculeAnalyzer {
      * <p>
      * Note that tips can only be bonded to one other <i>carbon</i> but may also be bonded to other atoms.
      * <p>
-     * Note that this should be <i>easy</i> to complete once you have found all atoms in the molecule
+     * Note that this should be <i>easy</i> to comp-lete once you have found all atoms in the molecule
      * and added them to the allAtoms list.
      * <p>
      * This is similar to searching for leaf vertices in a graph.

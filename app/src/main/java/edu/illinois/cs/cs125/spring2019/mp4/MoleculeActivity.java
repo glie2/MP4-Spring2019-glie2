@@ -97,7 +97,7 @@ public class MoleculeActivity extends Activity {
         ((Switch) findViewById(R.id.useColorSwitch)).setChecked(useColor);
 
         // Restore the last-viewed molecule index from SharedPreferences
-
+        currentMoleculeIndex = sharedPreferences.getInt(PREF_LAST_MOLECULE, 0);
         // Set up our WebView to display the current molecule
         webView = findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
