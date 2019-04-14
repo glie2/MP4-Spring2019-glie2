@@ -116,7 +116,12 @@ public class MoleculeAnalyzer {
      * @see <a href="https://en.wikipedia.org/wiki/Cycle_(graph_theory)">Cycle Detection</a>
      */
     public List<BondedAtom> getRing() {
-        return getRing(allAtoms.get(0), new ArrayList<BondedAtom>());
+        for (BondedAtom atom : allAtoms) {
+            if (getRing(atom, new ArrayList<>()) != null) {
+                return getRing(atom, new ArrayList<>());
+            }
+        }
+        return null;
     }
 
     /**
@@ -131,6 +136,16 @@ public class MoleculeAnalyzer {
      */
     public List<BondedAtom> getRing(final BondedAtom current, final List<BondedAtom> visited) {
 
+        for (BondedAtom neighbor : current) {
+            //If the size > 2 then it is a ring
+            List<BondedAtom> arr = findPath(current, neighbor);
+            if (arr != null && arr.size() > 2) {
+                return arr;
+            }
+        }
+        return null;
+
+        /**
         for (BondedAtom neighbor : current) {
 
             List<BondedAtom> copy = new ArrayList<>(visited);
@@ -157,12 +172,7 @@ public class MoleculeAnalyzer {
                 return poop;
             }
         }
-        return null;
-        /**
-        //Base Case
-        if (current.equals(visited.get(0)) && visited.size() >= 3) {
-            return visited;
-        }*/
+        return null;*/
     }
 
     /**
